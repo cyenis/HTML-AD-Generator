@@ -38,165 +38,194 @@
 
 <body>
     <div class="container">
-        <div class="generator">
-
-
-
-            <div class="row">
-                <label for="adtype">Ad Type</label>
-                <select id="adtype" class="form-control">
-                    <option value="banner">Banner</option>
-                    <option value="iframe">Iframe/Script </option>
-                </select>
+        <div class="row">
+            <div class="col-sm">
             </div>
 
-            <div class="row">
-                <label for="devicetype">Device Type</label>
-
-                <select id="devicetype" class="form-control">
-                    <option value="alldevices">All devices</option>
-                    <option value="desktop">Desktop</option>
-                    <option value="mobile">Ad mobile</option>
-                </select>
-            </div>
-
-            <div class="row">
-
-                <label for="client">Client Name</label>
-                <input type="text" id="client" name="client" class="form-control">
-            </div>
-
-
-            <form id="banner" action="javascript:generateBannerAd();">
-                <div class="form-group">
-
-                    <label for="imagelink">Wordpress Image link:</label>
-                    <input class="form-control" type="text" id="imagelink" name="imagelink">
-                    <label for="adurl">Ad URL:</label>
-                    <input class="form-control" type="text" id="adurl" name="adurl"><br>
-                    <input type="submit" value="Generate" class="btn btn-primary">
-
+            <div class="generator col-sm">
+                <div class="row">
+                    <h1>Ad Banner Generator</h1>
+                    <label for="adtype">Select Ad Type</label>
+                    <select id="adtype" class="form-control">
+                        <option value="banner">Banner</option>
+                        <option value="iframe">Iframe/Script </option>
+                    </select>
                 </div>
-            </form>
 
-            <form id="iframe" action="javascript:generateIframeAd();">
-                <div class="form-group">
+                <div class="row">
+                    <label for="devicetype">Select Device Type</label>
 
-                    <label for="iframecode">Iframe code:</label>
-                    <input type="text" id="iframecode" name="iframecode" class="form-control"><br>
-                    <input type="submit" value="Generate" class="btn btn-primary">
+                    <select id="devicetype" class="form-control">
+                        <option value="alldevices">All devices</option>
+                        <option value="desktop">Desktop</option>
+                        <option value="mobile">Ad mobile</option>
+                    </select>
                 </div>
-            </form>
 
-            <div class="results">
+                <div class="row">
+
+                    <label for="client">Enter Client Name</label>
+                    <input type="text" id="client" name="client" class="form-control">
+
+
+                    <form id="banner" action="javascript:generateBannerAd();">
+                        <h3>Image Banner</h3>
+                        <div class="form-group">
+                            <label for="imagelink">Image URL:</label>
+                            <input class="form-control" type="text" id="imagelink" name="imagelink">
+                            <label for="adurl">Ad URL:</label>
+                            <input class="form-control" type="text" id="adurl" name="adurl"><br>
+                            <input type="submit" value="Generate" class="btn btn-primary">
+
+                        </div>
+                    </form>
+
+                    <form id="iframe" action="javascript:generateIframeAd();">
+                        <div class="form-group">
+                            <h3>iFrame or Script Banner</h3>
+
+                            <label for="iframecode">Iframe code:</label>
+                            <input type="text" id="iframecode" name="iframecode" class="form-control"><br>
+                            <input type="submit" value="Generate" class="btn btn-primary">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm">
+            </div>
+
+
+            <div class="container results">
                 <div id="bannercode">
-                    <h3>Banner code:</h3>
-                    <pre>
+                    <div class="row">
+
+                        <div class="col-sm">
+                            <h3>Banner code:</h3>
+                            <pre>
         <code id="adcode">&lt;div class="td-all-devices"&gt;&lt;/div&gt;</code>
         </pre>
-                    <h4>Preview</h4>
-                    <div id="bannerAdPreview"></div>
+                            <button onclick="copyCode('#adcode')" class="btn btn-primary">Copy code</button>
+                        </div>
+
+                        <div class="col-sm">
+                            <h4>Preview</h4>
+                            <div id="bannerAdPreview"></div>
+                        </div>
+                    </div>
                 </div>
+
 
                 <div id="iframecodegenerator">
                     <h3>iframe code:</h3>
                     <pre>
         <code id="iframeadcode">&lt;div class="td-all-devices"&gt;&lt;/div&gt;</code>
         </pre>
+                    <button onclick="copyCode('#iframeadcode')" class="btn btn-primary">Copy code</button>
                     <h4>Preview</h4>
                     <div id="iFrameAdPreview"></div>
                 </div>
-
-
             </div>
 
+        </div>
+        <script>
 
-            <script>
-
-                var deviceTypeClass = "td-all-devices";
-                var deviceTypeName = "All Devices";
-                var iframeCodeString = "";
+            var deviceTypeClass = "td-all-devices";
+            var deviceTypeName = "All Devices";
+            var iframeCodeString = "";
 
 
-                $(document).ready(function () {
+            $(document).ready(function () {
 
-                    $("#adtype").change(function () {
-                        var selected = $("#adtype option:selected").val();
-                        switch (selected) {
-                            default:
-                            case "banner":
-                                $("#iframe").hide();
-                                $("#iframecode").hide();
-                                $("#bannercode").show();
-                                $("#banner").show();
-                                break;
-                            case "iframe":
-                                $("#iframe").show();
-                                $("#iframecodegenerator").show();
-                                $("#banner").hide();
-                                $("#bannercode").hide();
-                                break;
+                $("#adtype").change(function () {
+                    var selected = $("#adtype option:selected").val();
+                    switch (selected) {
+                        default:
+                        case "banner":
+                            $("#iframe").hide();
+                            $("#iframecode").hide();
+                            $("#bannercode").show();
+                            $("#banner").show();
+                            break;
+                        case "iframe":
+                            $("#iframe").show();
+                            $("#iframecodegenerator").show();
+                            $("#banner").hide();
+                            $("#bannercode").hide();
+                            break;
 
-                        }
-                    });
-
-                    $("#devicetype").change(function () {
-                        var devicetype = $("#devicetype option:selected").val();
-                        switch (devicetype) {
-                            default:
-                            case "alldevices":
-                                console.log(devicetype)
-                                deviceTypeClass = "td-all-devices"
-                                var deviceTypeName = "All Devices";
-                                break;
-                            case "desktop":
-                                console.log(devicetype)
-                                deviceTypeClass = "td-visible-desktop"
-                                var deviceTypeName = "Desktop";
-                                break;
-                            case "mobile":
-                                console.log(devicetype)
-                                deviceTypeClass = "td-visible-phone"
-                                var deviceTypeName = "Mobile";
-                                break;
-
-                        }
-                    });
-
-                    $("#iframe").hide();
-                    $("#iframecodegenerator").hide();
-
+                    }
                 });
 
+                $("#devicetype").change(function () {
+                    var devicetype = $("#devicetype option:selected").val();
+                    switch (devicetype) {
+                        default:
+                        case "alldevices":
+                            console.log(devicetype)
+                            deviceTypeClass = "td-all-devices"
+                            deviceTypeName = "All Devices";
+                            break;
+                        case "desktop":
+                            console.log(devicetype)
+                            deviceTypeClass = "td-visible-desktop"
+                            deviceTypeName = "Desktop";
+                            break;
+                        case "mobile":
+                            console.log(devicetype)
+                            deviceTypeClass = "td-visible-phone"
+                            deviceTypeName = "Mobile";
+                            break;
+
+                    }
+                });
+
+                $(".results").hide();
+                $("#iframe").hide();
+                $("#iframecodegenerator").hide();
+
+            });
 
 
 
-                function generateBannerAd() {
-                    console.log("Generateing ad preview....")
-                    $("#bannerAdPreview").html(`<a href="` + $("#adurl").val() + `"><img src="` + $("#imagelink").val() + `" alt=""></a>`);
-                    console.log("Generateing ad code....")
-                    $("#adcode").html("&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Start-->" + "<br>" + `&lt;div class="` + deviceTypeClass + `"&gt;` + "<br>" + `&lt;a href="` + $("#adurl").val() + `" target="_blank"&gt;<br>
+
+            function generateBannerAd() {
+                console.log("Generateing ad preview....")
+                $(".results").show();
+                $("#bannerAdPreview").html(`<a href="` + $("#adurl").val() + `"><img src="` + $("#imagelink").val() + `" alt=""></a>`);
+                console.log("Generateing ad code....")
+                $("#adcode").html("&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Start-->" + "<br>" + `&lt;div class="` + deviceTypeClass + `"&gt;` + "<br>" + `&lt;a href="` + $("#adurl").val() + `" target="_blank"&gt;<br>
 &lt;img src="`+ $("#imagelink").val() + `" alt="" /&gt;<br> 
 &lt;/a&gt;<br>
 &lt;/div&gt;<br>`+ "&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Finish--><br>")
-                }
+            }
 
-                function generateIframeAd() {
-                    iframeCodeString = $("#iframecode").val();
-                    iframeCodeString.toString();
-                    console.log("Generateing ad preview....")
-                    $("#iFrameAdPreview").html($("#iframecode").val());
-                    console.log("Generateing iframe ad code....")
-                    $("#iframeadcode").html("&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Start-->" + "<br>" + `&lt;div class="` + deviceTypeClass + `"&gt;` + `<br><xmp id="adcode">` + iframeCodeString +
-                        `</xmp>&lt;/div&gt;<br>` + "&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Finish--><br>")
-                }
+            function generateIframeAd() {
+                $(".results").show();
+                iframeCodeString = $("#iframecode").val();
+                iframeCodeString.toString();
+                console.log("Generateing ad preview....")
+                $("#iFrameAdPreview").html($("#iframecode").val());
+                console.log("Generateing iframe ad code....")
+                $("#iframeadcode").html("&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Start-->" + "<br>" + `&lt;div class="` + deviceTypeClass + `"&gt;` + `<br><xmp id="adcode">` + iframeCodeString +
+                    `</xmp>&lt;/div&gt;<br>` + "&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Finish--><br>")
+            }
 
 
 
 
-            </script>
-        </div>
-    </div>
+            function copyCode(element) {
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val($(element).text()).select();
+                document.execCommand("copy");
+                $temp.remove();
+                alert("Code copied to clipboard")
+            }
+
+
+
+        </script>
+
 </body>
 
 </html>
