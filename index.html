@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Generator</title>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        code {
+            font-family: Consolas, "courier new";
+            color: crimson;
+            background-color: #f1f1f1;
+            padding: 2px;
+            font-size: 105%;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div>
+        <select id="adtype">
+            <option value="banner">Banner</option>
+            <option value="iframe">Iframe</option>
+            <option value="script">Ad script</option>
+        </select>
+    </div>
+
+    <div>
+        <select id="devicetype">
+            <option value="alldevices">All devices</option>
+            <option value="desktop">Desktop</option>
+            <option value="mobile">Ad mobile</option>
+        </select>
+    </div>
+
+    <label for="client">Client</label>
+    <input type="text" id="client" name="client"><br><br>
+
+    <form id="banner" action="javascript:generateBannerAd();">
+
+        <label for="imagelink">Wordpress Image link:</label>
+        <input type="text" id="imagelink" name="imagelink"><br><br>
+        <label for="adurl">Ad URL:</label>
+        <input type="text" id="adurl" name="adurl"><br><br>
+        <input type="submit" value="Submit">
+
+
+    </form>
+
+    <form id="iframe" action="javascript:generateBannerAd();">
+
+        <label for="iframecode">Iframe code:</label>
+        <input type="text" id="iframecode" name="iframecode"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <form id="script" action="javascript:generateBannerAd();">
+        <label for="scriptcode">Script code:</label>
+        <input type="text" id="scriptcode" name="scriptcode"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+
+    <div>
+        <p>All Devices Ad code:</p>
+        <pre>
+        <code id="adcode">&lt;div class="td-all-devices"&gt;&lt;/div&gt;</code>
+        </pre>
+    </div>
+
+    <script>
+
+        var deviceTypeClass = "td-all-devices";
+        var deviceTypeName = "All Devices";
+
+        $(document).ready(function () {
+
+            $("#adtype").change(function () {
+                var selected = $("#adtype option:selected").val();
+                switch (selected) {
+                    case "banner":
+                        $("#iframe").hide();
+                        $("#script").hide();
+                        $("#banner").show();
+                        break;
+                    case "iframe":
+                        $("#iframe").show();
+                        $("#script").hide();
+                        $("#banner").hide();
+                        break;
+                    case "script":
+                        $("#iframe").hide();
+                        $("#script").show();
+                        $("#banner").hide();
+                        break;
+
+                    default:
+                        break;
+                }
+            });
+
+            $("#devicetype").change(function () {
+                var devicetype = $("#devicetype option:selected").val();
+                switch (devicetype) {
+                    default:
+                    case "alldevices":
+                        console.log(devicetype)
+                        deviceTypeClass = "td-all-devices"
+                        var deviceTypeName = "All Devices";
+
+                        break;
+                    case "desktop":
+                        console.log(devicetype)
+                        deviceTypeClass = "td-visible-desktop"
+                        var deviceTypeName = "Desktop";
+                        break;
+                    case "mobile":
+                        console.log(devicetype)
+                        deviceTypeClass = "td-visible-phone"
+                        var deviceTypeName = "Mobile";
+
+                        break;
+
+                }
+            });
+
+
+
+            $("#iframe").hide();
+            $("#script").hide();
+
+        });
+
+
+
+
+        function generateBannerAd() {
+            console.log("Generateing ad....")
+            $("#adcode").html("&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Start-->" + "<br>" + `&lt;div class="` + deviceTypeClass + `"&gt;` + "<br>" + `&lt;a href="` + $("#adurl").val() + `" target="_blank"&gt;<br>
+&lt;img src="`+ $("#imagelink").val() + `" alt="" /&gt;<br> 
+&lt;/a&gt;<br>
+&lt;/div&gt;<br>`+ "&lt;!--" + $("#client").val() + " " + deviceTypeName + "  Finish--><br>")
+
+        }
+    </script>
+
+
+</body>
+
+</html>
